@@ -51,7 +51,7 @@ const surgeRegionDefs = [
 const serviceMeta = {
   流量信息:   { icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Speedtest.png' },
   Proxy:     { icon: 'https://raw.githubusercontent.com/Irrucky/Tool/main/Surge/icon/surge_2.png' },
-  ChatGPT:   { url: 'http://www.gstatic.com/generate_204', icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/chatgpt%28white%29.png' },
+  ChatGPT:   { url: 'http://www.gstatic.com/generate_204', icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/chatgpt%28white%29.png'  },
   智能策略:   { url: 'http://www.apple.com/library/test/success.html', icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Airport.png' },
   手动选择:   { icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Auto_Speed.png' },
   All:       { icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu%282%29.png' },
@@ -97,6 +97,8 @@ function main(config) {
   const allProxyNames = config.proxies.map((proxy) => proxy.name)
   const realProxyNames = allProxyNames.filter((name) => name !== '直连')
   const trafficProxyNames = filterProxyNamesByRegex(realProxyNames, surgeTrafficRegex)
+  const safeTrafficProxyNames =
+    trafficProxyNames.length > 0 ? trafficProxyNames : realProxyNames
   const manualProxyNames = realProxyNames.filter((name) => !surgeTrafficRegex.test(name))
 
   const regionProxyGroups = []
@@ -132,7 +134,7 @@ function main(config) {
       ...groupBaseOption,
       name: '流量信息',
       type: 'select',
-      proxies: uniqueList([...trafficProxyNames]),
+      proxies: uniqueList([...safeTrafficProxyNames]),
       icon: serviceMeta['流量信息'].icon,
     },
     {
@@ -147,8 +149,8 @@ function main(config) {
       name: 'ChatGPT',
       type: 'url-test',
       url: serviceMeta['ChatGPT'].url,
-      interval: 2400,
-      tolerance: 80,
+      interval: 3600,
+      tolerance: 90,
       proxies: safeChatgptProxyNames,
       icon: serviceMeta['ChatGPT'].icon,
     },
@@ -232,4 +234,3 @@ function main(config) {
 
   return config
 }
-
