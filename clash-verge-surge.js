@@ -50,11 +50,11 @@ const surgeRegionDefs = [
 // 策略组图标与测速 URL
 const serviceMeta = {
   流量信息:   { icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Speedtest.png' },
-  Proxy:     { icon: 'https://raw.githubusercontent.com/Irrucky/Tool/main/Surge/icon/surge_2.png' },
-  ChatGPT:   { url: 'http://www.gstatic.com/generate_204', icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/chatgpt%28white%29.png'  },
-  智能策略:   { url: 'http://www.apple.com/library/test/success.html', icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Airport.png' },
+  Proxy:     { icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/liuliang.png' },
+  ChatGPT:   { url: 'http://www.gstatic.com/generate_204', icon: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/light/openai.png'  },
+  智能策略:   { url: 'http://www.apple.com/library/test/success.html', icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/lightning(5).png' },
   手动选择:   { icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Auto_Speed.png' },
-  All:       { icon: 'https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu%282%29.png' },
+  All:       { icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Airport.png' },
 }
 
 // 远程规则集公共配置
