@@ -8,7 +8,7 @@
 ## Structure
 - surge.conf: Surge 主配置
 - clash-verge.js: 规则转换
-- 技术配置/: 文档与说明
+- config-docs/: 文档与说明
 - .vscode/: VS Code 工作区配置
 
 ## Usage
