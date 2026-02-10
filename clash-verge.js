@@ -162,7 +162,7 @@ function main(config) {
     {
       ...groupBaseOption,
       name: 'ChatGPT',
-      type: 'url-test',
+      type: 'select',
       url: serviceMeta['ChatGPT'].url,
       interval: 3600,
       tolerance: 90,
