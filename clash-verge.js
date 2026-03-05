@@ -151,8 +151,8 @@ function main(config) {
 
   // ChatGPT：仅使用 US/自建/JP/TW 地区测量组，若没有则使用智能策略兜底
   const chatgptProxyNames = uniqueList([
-    regionProxyNames.get('美国节点')?.length ? '美国节点' : null,
     regionProxyNames.get('自建节点')?.length ? '自建节点' : null,
+    regionProxyNames.get('美国节点')?.length ? '美国节点' : null,
     regionProxyNames.get('日本节点')?.length ? '日本节点' : null,
     regionProxyNames.get('台湾节点')?.length ? '台湾节点' : null,
   ])
