@@ -16,6 +16,16 @@ const groupBaseOption = {
   hidden: false,
 }
 
+
+// url-test 组专用参数：降低切换抖动并减少无意义探测
+const urlTestBaseOption = {
+  ...groupBaseOption,
+  interval: 600,
+  timeout: 3000,
+  tolerance: 50,
+  url: 'https://cp.cloudflare.com/generate_204',
+}
+
 // 智能策略(url-test)节点筛选关键字：用于从全部节点中过滤出常用地区
 const surgeSmartRegex =
   /(Hong\s*Kong|HK|Japan|JP|Singapore|SG|Taiwan|TW|United\s*States|US|美国|日本|新加坡|台湾)/i
@@ -42,6 +52,11 @@ const surgeRegionDefs = [
     name: '台湾节点',
     regex: /(台湾|Taiwan|TW)/i,
     icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/China.png',
+  },
+  {
+    name: '自建节点',
+    regex: /(自建|家宽|专线|Home|DIY)/i,
+    icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/World.png',
   },
   {
     name: '新加坡节点',
@@ -120,9 +135,9 @@ function main(config) {
     if (proxies.length === 0) return
     regionProxyNames.set(region.name, proxies)
     regionProxyGroups.push({
-      ...groupBaseOption,
+      ...urlTestBaseOption,
       name: region.name,
-      type: 'select',
+      type: 'url-test',
       proxies: proxies,
       icon: region.icon,
     })
@@ -134,11 +149,12 @@ function main(config) {
   )
   const safeSmartProxyNames = smartProxyNames.length > 0 ? smartProxyNames : realProxyNames
 
-  // ChatGPT：优先 JP/US/TW，若没有则使用智能策略兜底
+  // ChatGPT：仅使用 US/自建/JP/TW 地区测量组，若没有则使用智能策略兜底
   const chatgptProxyNames = uniqueList([
-    ...(regionProxyNames.get('日本节点') || []),
-    ...(regionProxyNames.get('美国节点') || []),
-    ...(regionProxyNames.get('台湾节点') || []),
+    regionProxyNames.get('美国节点')?.length ? '美国节点' : null,
+    regionProxyNames.get('自建节点')?.length ? '自建节点' : null,
+    regionProxyNames.get('日本节点')?.length ? '日本节点' : null,
+    regionProxyNames.get('台湾节点')?.length ? '台湾节点' : null,
   ])
   const safeChatgptProxyNames =
     chatgptProxyNames.length > 0 ? chatgptProxyNames : safeSmartProxyNames
@@ -165,15 +181,13 @@ function main(config) {
       type: 'select',
       url: serviceMeta['ChatGPT'].url,
       interval: 3600,
-      tolerance: 90,
       proxies: safeChatgptProxyNames,
       icon: serviceMeta['ChatGPT'].icon,
     },
     {
-      ...groupBaseOption,
+      ...urlTestBaseOption,
       name: '智能策略',
       type: 'url-test',
-      url: serviceMeta['智能策略'].url,
       proxies: safeSmartProxyNames,
       icon: serviceMeta['智能策略'].icon,
     },
