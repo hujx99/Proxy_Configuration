@@ -56,7 +56,7 @@ const surgeRegionDefs = [
   {
     name: '自建节点',
     regex: /(自建|家宽|专线|Home|DIY)/i,
-    icon: 'https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/World.png',
+    icon: 'https://raw.githubusercontent.com/hujx99/Proxy_Configuration/main/photo/vps.png',
   },
   {
     name: '新加坡节点',
