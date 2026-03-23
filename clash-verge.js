@@ -118,7 +118,7 @@ function main(config) {
   }
 
   // 全部节点名/真实节点名（不含直连）
-  const allProxyNames = config.proxies.map((proxy) => proxy.name)
+  const allProxyNames = config.proxies.map((proxy) => proxy?.name).filter(Boolean)
   const realProxyNames = allProxyNames.filter((name) => name !== '直连')
   // 仅流量信息节点与其兜底列表
   const trafficProxyNames = filterProxyNamesByRegex(realProxyNames, surgeTrafficRegex)
@@ -175,12 +175,12 @@ function main(config) {
       proxies: ['智能策略', '手动选择', '直连'],
       icon: serviceMeta['Proxy'].icon,
     },
+    ...regionProxyGroups,
     {
-      ...groupBaseOption,
+      ...urlTestBaseOption,
       name: 'ChatGPT',
-      type: 'select',
+      type: 'fallback',
       url: serviceMeta['ChatGPT'].url,
-      interval: 3600,
       proxies: safeChatgptProxyNames,
       icon: serviceMeta['ChatGPT'].icon,
     },
@@ -188,6 +188,7 @@ function main(config) {
       ...urlTestBaseOption,
       name: '智能策略',
       type: 'url-test',
+      url: serviceMeta['智能策略'].url,
       proxies: safeSmartProxyNames,
       icon: serviceMeta['智能策略'].icon,
     },
@@ -198,7 +199,6 @@ function main(config) {
       proxies: uniqueList([...manualProxyNames, 'All']),
       icon: serviceMeta['手动选择'].icon,
     },
-    ...regionProxyGroups,
     {
       ...groupBaseOption,
       name: 'All',
@@ -248,6 +248,10 @@ function main(config) {
     'DOMAIN,alpha123.uk,Proxy',
     'RULE-SET,apple_intelligence,ChatGPT',
     'RULE-SET,ai,ChatGPT',
+    'DOMAIN-SUFFIX,claude.ai,ChatGPT',
+    'DOMAIN-SUFFIX,anthropic.com,ChatGPT',
+    'DOMAIN-SUFFIX,claudeusercontent.com,ChatGPT',
+    'DOMAIN-SUFFIX,claude-cdn.com,ChatGPT',
     'RULE-SET,blocked,Proxy',
     'RULE-SET,cn,DIRECT',
     'DOMAIN,apps.apple.com,Proxy',
